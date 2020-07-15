@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class InputFileParser {
 
-	@Value("${input.csv.name}")
+	@Value("${input.csv.name:input.csv}")
 	String inputCsvFile;
 	
 	@Autowired
@@ -78,7 +78,7 @@ public class InputFileParser {
 	 */
 	private void readCsvAndSaveEvents(Map<String, AssetTo> allDailyAssets, List<Future<?>> futures) {
 		
-		try (Scanner scanner = new Scanner(new File(inputCsvFile));) {
+		try (Scanner scanner = new Scanner(new File(inputCsvFile))) {
 		    
 			while (scanner.hasNextLine()) {
 		    	List<String> stringRecord = getRecordFromLine(scanner.nextLine());
@@ -154,7 +154,7 @@ public class InputFileParser {
 	 * in the day.
 	 */
 	@Scheduled(cron = "${cron.expression.csv.load.job}")
-	void readCsvAtScheduleAndPersistData() {} {
+	public void readCsvAtScheduleAndPersistData() {
 		try {
 			List<Future<?>> futures = new ArrayList<Future<?>>();
 			Map<String, AssetTo> allDailyAssets = new ConcurrentHashMap<String, AssetTo>();

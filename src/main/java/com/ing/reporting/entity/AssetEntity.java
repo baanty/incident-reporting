@@ -4,7 +4,10 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -20,8 +23,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class AssetEntity implements GenericEntity {
-
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "asset_generator")
+	@SequenceGenerator(name="asset_generator", sequenceName = "asset_seq", initialValue = 8 )
+	private int id;
+
 	@Column(name = "ASSET_NAME")
 	private String assetName;
 
@@ -37,7 +44,7 @@ public class AssetEntity implements GenericEntity {
 	@Column(name = "RATING")
 	private int rating;
 	
-	@Column(name = "CURRENT_TIMESTAMP")
+	@Column(name = "CRR_STMP")
 	private Timestamp currentTimestamp;
 	
 }

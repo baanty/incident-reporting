@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class EventEntity implements GenericEntity{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_generator")
 	@SequenceGenerator(name="event_generator", sequenceName = "event_seq", initialValue = 8 )
 	private int id;
 

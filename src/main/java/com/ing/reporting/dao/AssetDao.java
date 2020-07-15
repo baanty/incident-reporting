@@ -15,6 +15,6 @@ import com.ing.reporting.entity.AssetEntity;
 @Profile({"TEST", "ACCP", "PROD"})
 public interface AssetDao extends GenericDao<AssetEntity, String> {
 
-	@Query("select a from AssetEntity where a.currentTimestamp >= :beginingOffset and a.currentTimestamp <= :endingOffset")
+	@Query("select a from AssetEntity a where a.currentTimestamp >= :beginingOffset and a.currentTimestamp <= :endingOffset")
 	List<AssetEntity> findAssetEntitiesBetweenTimeRange(@Param("beginingOffset") Timestamp beginingOffset,@Param("endingOffset") Timestamp endingOffset);
 }
