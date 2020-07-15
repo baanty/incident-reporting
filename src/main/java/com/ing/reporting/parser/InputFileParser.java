@@ -97,15 +97,22 @@ public class InputFileParser {
 				
 				AssetTo assetTo = allDailyAssets.get(assetName);
 				
-				if ( assetTo != null && severity == 1 ) {
-					long newDownTime = assetTo.getTotalDownTime() + (( endTime.getTime() - startTime.getTime() )/1000) ;
-					long newUpTime = (24*3600 - newDownTime) ;
+				if ( assetTo != null ) {
+					long newDownTime = 0 ;
+					long newUpTime = 100 ;
+					
+					if ( severity == 1  ) {
+						newDownTime = assetTo.getTotalDownTime() + (( endTime.getTime() - startTime.getTime() )/ ( 10 * 24 * 3600 )) ;
+						newUpTime = ( 100 - newDownTime ) ;
+					}
+					
 					AssetTo newAssetTo = AssetTo
 											.builder()
 											.assetName(assetName)
 											.totalDownTime(newDownTime)
 											.totalUpTime(newUpTime)
 											.totalIncidents(assetTo.getTotalIncidents() + 1 )
+											.rating(assetTo.getRating() + ( severity == 1 ? 30 : 10 ))
 											.build();
 					allDailyAssets.remove(assetName);
 					allDailyAssets.put(assetName, newAssetTo);
