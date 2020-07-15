@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.ing.reporting.dao.AssetDao;
@@ -26,7 +25,7 @@ import com.ing.reporting.entity.EventEntity;
 import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
 import com.ing.reporting.service.parallal.GenericEntityPersister;
 import com.ing.reporting.to.AssetTo;
-import com.rabo.api.util.MappingUtil;
+import com.ing.reporting.util.MappingUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@Service
+@Component
 public class InputFileParser {
 
 	@Value("${input.csv.name}")
@@ -112,7 +111,7 @@ public class InputFileParser {
 					allDailyAssets.put(assetName, newAssetTo);
 					
 				}
-				futures.add(executor.submit(new GenericEntityPersister(eventDao, entity)));
+				futures.add(executor.submit(new GenericEntityPersister<EventEntity>(eventDao, entity)));
 		    }
 		} catch (FileNotFoundException exception) {
 			log.error("Got error while trying to load Excel to Database.", exception);
@@ -125,8 +124,9 @@ public class InputFileParser {
 	 * Use this method to load the assets in the Assets table.
 	 * 
 	 * @param allDailyAssets
+	 * @param futures : The future, which holds the result to Event Save.
 	 */
-	private void loadAssets(Map<String, AssetTo> allDailyAssets) {
+	private void loadAssets(Map<String, AssetTo> allDailyAssets, List<Future<?>> futures) {
 		
 		if ( !CollectionUtils.isEmpty(allDailyAssets) ) {
 			
@@ -136,7 +136,7 @@ public class InputFileParser {
 											.filter(anAsset -> anAsset != null )
 											.map(MappingUtil::buildTransferObjectToBusinessObject)
 											.collect(Collectors.toList());
-			
+			futures.add(executor.submit(new GenericEntityPersister<AssetEntity>(assetDao, assets)));
 		}
 	}
 	
@@ -152,14 +152,9 @@ public class InputFileParser {
 			List<Future<?>> futures = new ArrayList<Future<?>>();
 			Map<String, AssetTo> allDailyAssets = new ConcurrentHashMap<String, AssetTo>();
 			readCsvAndSaveEvents(allDailyAssets, futures);
+			loadAssets(allDailyAssets, futures);
 			
-			for(Future<?> future : futures) {
-			    future.get(); /* At this point all the Event update is 
-			    complete. Begin asset processing. */ 
-			}
-			
-			
-		} catch (InterruptedException | ExecutionException exception) {
+		} catch (Exception exception) {
 			log.error("Can not save event object to DB");
 			throw new RuntimeException(exception);
 		}

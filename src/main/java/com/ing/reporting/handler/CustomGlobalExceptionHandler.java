@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
-import com.rabo.api.jsonbody.CustomErrorResponse;
+import com.ing.reporting.jsonbody.CustomErrorResponse;
 
 /**
  * Use this class to Handle all generci Rest controller exceptions.

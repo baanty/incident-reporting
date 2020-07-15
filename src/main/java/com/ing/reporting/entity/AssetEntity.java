@@ -1,5 +1,7 @@
 package com.ing.reporting.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,5 +36,8 @@ public class AssetEntity implements GenericEntity {
 	
 	@Column(name = "RATING")
 	private int rating;
+	
+	@Column(name = "CURRENT_TIMESTAMP")
+	private Timestamp currentTimestamp;
 	
 }

@@ -1,4 +1,4 @@
-package com.rabo.api.jsonbody;
+package com.ing.reporting.jsonbody;
 
 import java.time.LocalDateTime;
 

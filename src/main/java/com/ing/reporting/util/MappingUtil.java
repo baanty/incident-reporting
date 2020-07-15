@@ -1,4 +1,7 @@
-package com.rabo.api.util;
+package com.ing.reporting.util;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.ing.reporting.entity.AssetEntity;
 import com.ing.reporting.entity.EventEntity;
@@ -81,6 +84,7 @@ public final class MappingUtil {
 				.totalUpTime(eventTo.getTotalUpTime())
 				.rating(eventTo.getRating())
 				.totalIncidents(eventTo.getTotalIncidents())
+				.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
 				.build();
 	}
 }

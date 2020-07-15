@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ing.reporting.dao.EventDao;
 import com.ing.reporting.entity.EventEntity;
 import com.ing.reporting.to.EventTo;
-import com.rabo.api.util.MappingUtil;
+import com.ing.reporting.util.MappingUtil;
 
 @Service
 public class EventService {

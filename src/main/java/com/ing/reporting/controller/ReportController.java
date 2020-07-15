@@ -44,7 +44,7 @@ public class ReportController {
 		try (final CSVPrinter csvPrinter = new CSVPrinter(httpServletResponse.getWriter(),
 				CSVFormat.DEFAULT.withHeader("Asset Name", "Total Incidents", "Total Up Time", "Rating"))) {
 
-			List<AssetTo> daysAssets = service.findAssetStatisticsForTheDay();
+			List<AssetTo> daysAssets = service.findAssetStatisticsForThePresentDay();
 
 			if (!CollectionUtils.isEmpty(daysAssets)) {
 				daysAssets.stream().filter(anAssetTo -> anAssetTo != null).forEach(anAssetTo -> {
