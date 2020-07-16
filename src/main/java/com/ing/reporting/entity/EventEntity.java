@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "EVENT")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class EventEntity implements GenericEntity{
+public class EventEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_generator")

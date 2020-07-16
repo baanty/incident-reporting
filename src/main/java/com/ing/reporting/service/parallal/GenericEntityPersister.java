@@ -5,14 +5,13 @@ import java.util.Collection;
 import org.springframework.util.CollectionUtils;
 
 import com.ing.reporting.dao.GenericDao;
-import com.ing.reporting.entity.GenericEntity;
 
 /**
  * Use this Runner Thread to save the entity in parallal.
  * @author Pijush Kanti Das
  *
  */
-public class GenericEntityPersister<E extends GenericEntity> implements Runnable {
+public class GenericEntityPersister<E> implements Runnable {
 	
 	private final GenericDao<E, ?> dao;
 	
@@ -20,6 +19,12 @@ public class GenericEntityPersister<E extends GenericEntity> implements Runnable
 	
 	private final Collection<E> entities;
 
+	/**
+	 * Objective of this method is to save the entities 
+	 * in different thread. So, processing becomes faster. 
+	 * When the batch job runs, the Asset saving and Event save activities are independent
+	 * of each other. So, this save should work.
+	 */
 	@Override
 	public void run() {
 		

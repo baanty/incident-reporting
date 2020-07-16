@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "ASSET")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class AssetEntity implements GenericEntity {
+public class AssetEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "asset_generator")
