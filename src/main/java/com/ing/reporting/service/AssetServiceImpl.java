@@ -34,9 +34,9 @@ public class AssetServiceImpl implements AssetService {
 		beginingOffset.setSeconds(0);
 		
 		Timestamp endingOffset = Timestamp.valueOf(LocalDateTime.now());
-		endingOffset.setHours(0);
-		endingOffset.setMinutes(0);
-		endingOffset.setSeconds(0);
+		endingOffset.setHours(23);
+		endingOffset.setMinutes(59);
+		endingOffset.setSeconds(59);
 		return assetDao.findAssetEntitiesBetweenTimeRange(beginingOffset, endingOffset)
 				.stream()
 				.map(MappingUtil::buildBusinessObjectToTransferObject)

@@ -50,7 +50,7 @@ public class ReportController {
 				daysAssets.stream().filter(anAssetTo -> anAssetTo != null).forEach(anAssetTo -> {
 					try {
 						csvPrinter.printRecord(Arrays.asList(anAssetTo.getAssetName(), anAssetTo.getTotalIncidents(),
-								anAssetTo.getTotalUpTime(), anAssetTo.getTotalDownTime(), anAssetTo.getRating()));
+								anAssetTo.getTotalUpTime(), anAssetTo.getRating()));
 					} catch (IOException exception) {
 						log.error("And error occured while writing data to CSV file.", exception);
 						throw new GenericReportingApplicationRuntimeException(exception);
