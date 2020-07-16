@@ -2,6 +2,7 @@ package com.ing.reporting.controller.integrationtest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -31,7 +32,8 @@ public class ReportControllerTest {
 																"CRM,9,4%,230\r\n" + 
 																"Lending Department,4,6%,80\r\n" + 
 																"Insurance,16,0%,260\r\n";
-	
+	private static final String EXPECTED_OUTPUT_PREFIX_ERROR_FILE = "Erroneous Record,Time\r\n" + 
+			"Payments Gateway";
 	@Test
 	@DirtiesContext
 	public void testGetCurrentDateAssets() throws UnsupportedEncodingException {
@@ -43,5 +45,19 @@ public class ReportControllerTest {
 		String output = bos.toString(Charset.defaultCharset().toString());
 		assertNotNull(output);
 		assertEquals(EXPECTED_OUTPUT_ASSET_FILE, output );
+	}
+	
+	
+	@Test
+	@DirtiesContext
+	public void testGetErroneousEvents() throws UnsupportedEncodingException {
+		parser.readCsvAtScheduleAndPersistData();
+		HttpServletResponseStub httpServletResponse = new HttpServletResponseStub();
+		
+		controller.findDailyErrors(httpServletResponse);
+		ByteArrayOutputStream bos = httpServletResponse.getByteArrayOutputStream();
+		String output = bos.toString(Charset.defaultCharset().toString());
+		assertNotNull(output);
+		assertTrue( output.startsWith(EXPECTED_OUTPUT_PREFIX_ERROR_FILE) );
 	}
 }

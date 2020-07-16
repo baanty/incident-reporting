@@ -3,6 +3,7 @@ package com.ing.reporting.service.parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class InputFileParser {
 				}
 		    	List<String> stringRecord = getRecordFromLine(lineString);
 		    	
-		    	if ( validator.isValidRecord(stringRecord)) {
+		    	if ( !validator.isValidRecord(stringRecord)) {
 		    		saveErrorRecordToDb(stringRecord, futures);
 		    		continue;
 		    	}
@@ -130,6 +131,7 @@ public class InputFileParser {
 		ErrorEventEntity entity = ErrorEventEntity
 									.builder()
 									.erroneousRecord(String.join("", stringRecord))
+									.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
 									.build();
 		futures.add(executor.submit(new GenericEntityPersister<ErrorEventEntity>(errorEventDao, entity)));
 	}

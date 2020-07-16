@@ -59,7 +59,7 @@ public class ReportController {
 			httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + errorReportName + "\"");
 			service.writeDailyErrorRecordsOnOutStream(httpServletResponse.getWriter());
 		} catch (Exception exception) {
-			log.error("And error occured while writing data to CSV file.", exception);
+			log.error("And error occured while writing error data to CSV file.", exception);
 			throw new GenericReportingApplicationRuntimeException(exception);
 		}
 
