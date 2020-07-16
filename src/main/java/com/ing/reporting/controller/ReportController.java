@@ -20,9 +20,12 @@ public class ReportController {
 	@Autowired
 	WriterService service;
 
+
 	@Value("${user.download.file.name}")
 	private String csvFileName;
-
+	
+	@Value("${user.download.error.file.name")
+	private String errorReportName;
 	/**
 	 * Use this method to find all the customers from the controller.
 	 * 
@@ -34,7 +37,7 @@ public class ReportController {
 		try {
 			httpServletResponse.setContentType("text/csv");
 			httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + csvFileName + "\"");
-			service.writeOutStream(httpServletResponse.getWriter());
+			service.writeDailyAssetRecordsOnOutStream(httpServletResponse.getWriter());
 		} catch (Exception exception) {
 			log.error("And error occured while writing data to CSV file.", exception);
 			throw new GenericReportingApplicationRuntimeException(exception);
@@ -42,6 +45,25 @@ public class ReportController {
 
 	}
 	
+	
+	/**
+	 * Use this method to find all the customers from the controller.
+	 * 
+	 * @return
+	 */
+	@GetMapping("/findDailyErrors")
+	public void findDailyErrors(final HttpServletResponse httpServletResponse) {
+
+		try {
+			httpServletResponse.setContentType("text/csv");
+			httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + errorReportName + "\"");
+			service.writeDailyErrorRecordsOnOutStream(httpServletResponse.getWriter());
+		} catch (Exception exception) {
+			log.error("And error occured while writing data to CSV file.", exception);
+			throw new GenericReportingApplicationRuntimeException(exception);
+		}
+
+	}
 	
 
 }

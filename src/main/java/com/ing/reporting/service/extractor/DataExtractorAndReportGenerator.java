@@ -52,7 +52,7 @@ public class DataExtractorAndReportGenerator {
 			Files.createFile(Paths.get(outputReportLocation));
 
 			BufferedWriter writer = Files.newBufferedWriter(outputFilePath);
-			writerService.writeOutStream(writer);
+			writerService.writeDailyAssetRecordsOnOutStream(writer);
 			writer.close();
 		} catch (IOException exception) {
 			log.error("Error occured while trying to write the output file.");

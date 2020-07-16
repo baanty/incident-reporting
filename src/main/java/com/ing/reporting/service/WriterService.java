@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
 import com.ing.reporting.to.AssetTo;
+import com.ing.reporting.to.ErrorEventTo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,9 @@ public class WriterService {
 
 	@Autowired
 	AssetService service;
+	
+	@Autowired
+	ErrorEventService errorEventService;
 
 	/**
 	 * USe this methdo to write the utput data to a 
@@ -34,7 +38,7 @@ public class WriterService {
 	 * @param appendable : The CSV file output stream source.
 	 * 
 	 */
-	public void writeOutStream(Appendable appendable) {
+	public void writeDailyAssetRecordsOnOutStream(Appendable appendable) {
 		
 		try (final CSVPrinter csvPrinter = new CSVPrinter(appendable,
 				CSVFormat.DEFAULT.withHeader("Asset Name", "Total Incidents", "Total Down Time", "Rating"))) {
@@ -46,6 +50,38 @@ public class WriterService {
 					try {
 						csvPrinter.printRecord(Arrays.asList(anAssetTo.getAssetName(), anAssetTo.getTotalIncidents(),
 								anAssetTo.getTotalDownTime() + "%", anAssetTo.getRating()));
+					} catch (IOException exception) {
+						log.error("And error occured while writing data to CSV file.", exception);
+						throw new GenericReportingApplicationRuntimeException(exception);
+					}
+				});
+			}
+
+		} catch (Exception exception) {
+			log.error("And error occured while writing data to writer.", exception);
+			throw new GenericReportingApplicationRuntimeException(exception);
+		}
+		
+	}
+	
+	
+	/**
+	 * USe this methdo to write the daily error data to a 
+	 * CSV file and export it.
+	 * @param appendable : The CSV file output stream source.
+	 * 
+	 */
+	public void writeDailyErrorRecordsOnOutStream(Appendable appendable) {
+		
+		try (final CSVPrinter csvPrinter = new CSVPrinter(appendable,
+				CSVFormat.DEFAULT.withHeader("Erroneous Record", "Time"))) {
+
+			List<ErrorEventTo> dailyErrorRecords = errorEventService.findErrorEventsForThePresentDay();
+
+			if (!CollectionUtils.isEmpty(dailyErrorRecords)) {
+				dailyErrorRecords.stream().filter(anError -> anError != null).forEach(anError -> {
+					try {
+						csvPrinter.printRecord(Arrays.asList(anError.getErroneousRecord(), anError.getCurrentTimestamp()));
 					} catch (IOException exception) {
 						log.error("And error occured while writing data to CSV file.", exception);
 						throw new GenericReportingApplicationRuntimeException(exception);

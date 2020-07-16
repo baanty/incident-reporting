@@ -4,8 +4,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import com.ing.reporting.persistence.entity.AssetEntity;
+import com.ing.reporting.persistence.entity.ErrorEventEntity;
 import com.ing.reporting.persistence.entity.EventEntity;
 import com.ing.reporting.to.AssetTo;
+import com.ing.reporting.to.ErrorEventTo;
 import com.ing.reporting.to.EventTo;
 
 /**
@@ -86,5 +88,19 @@ public final class MappingUtil {
 				.totalIncidents(eventTo.getTotalIncidents())
 				.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
 				.build();
+	}
+	
+	
+	/**
+	 * Use this method to build Error Event business Objects from Transfer  object.
+	 * @param entity : The Business Object.
+	 * @return : The BUilt Error Event transfer Object
+	 */
+	public static final ErrorEventTo buildErrorEventToFromErrorEventEntity(ErrorEventEntity entity) {
+		return ErrorEventTo
+					.builder()
+					.erroneousRecord(entity.getErroneousRecord())
+					.currentTimestamp(entity.getCurrentTimestamp())
+					.build();
 	}
 }

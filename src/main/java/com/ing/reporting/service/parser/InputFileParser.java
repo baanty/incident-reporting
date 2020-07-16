@@ -21,12 +21,15 @@ import org.springframework.util.StringUtils;
 
 import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
 import com.ing.reporting.persistence.dao.AssetDao;
+import com.ing.reporting.persistence.dao.ErrorEventDao;
 import com.ing.reporting.persistence.dao.EventDao;
 import com.ing.reporting.persistence.entity.AssetEntity;
+import com.ing.reporting.persistence.entity.ErrorEventEntity;
 import com.ing.reporting.persistence.entity.EventEntity;
 import com.ing.reporting.service.parallal.GenericEntityPersister;
 import com.ing.reporting.to.AssetTo;
 import com.ing.reporting.util.MappingUtil;
+import com.ing.reporting.validator.InputRecordValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,6 +61,12 @@ public class InputFileParser {
 	AssetDao assetDao;
 	
 	@Autowired
+	ErrorEventDao errorEventDao;
+	
+	@Autowired
+	InputRecordValidator validator;
+	
+	@Autowired
 	ExecutorService executor;
 	
 	
@@ -76,7 +85,11 @@ public class InputFileParser {
 	 * to improve performance.
 	 * 
 	 * @param allDailyAssets : This is the <code>Map<String, AssetTo></code> that 
-	 * has the data of the daily summery of the assets.
+	 * has the data of the daily summery of the assets. It can be safely assumed that
+	 * even if number of events is large, the number of assets can not be large.
+	 * 
+	 * So, the collection of assets is kept in java heap. But the events are saved to DB.
+	 * 
 	 * @param futures : All the Future object references of the event table update.
 	 * @return
 	 */
@@ -91,44 +104,87 @@ public class InputFileParser {
 					continue;
 				}
 		    	List<String> stringRecord = getRecordFromLine(lineString);
-		    	String assetName = stringRecord.get(0);
-		    	Timestamp startTime = Timestamp.valueOf(stringRecord.get(1));
-		    	Timestamp endTime = Timestamp.valueOf(stringRecord.get(2));
-		    	int severity = Integer.parseInt(stringRecord.get(3));
 		    	
-				EventEntity  entity = EventEntity
-									.builder()
-									.assetName(assetName)
-									.starTime(startTime)
-									.endTIme(endTime)
-									.severity(severity)
-									.build();
-				
-				AssetTo assetTo = allDailyAssets.get(assetName);
-
-				
-				long newDownTime = 0;
-				long newUpTime = 100;
-
-				if (severity == 1) {
-					newDownTime = ((assetTo != null) ? assetTo.getTotalDownTime() : 0)
-							+ ((endTime.getTime() - startTime.getTime()) / (10 * 24 * 3600));
-					newUpTime = (100 - newDownTime);
-				}
-
-				AssetTo newAssetTo = AssetTo.builder().assetName(assetName).totalDownTime(newDownTime)
-						.totalUpTime(newUpTime).totalIncidents(( (assetTo != null) ? assetTo.getTotalIncidents() : 0  ) + 1)
-						.rating(( (assetTo != null) ? assetTo.getRating() : 0 ) + (severity == 1 ? 30 : 10)).build();
-				allDailyAssets.remove(assetName);
-				allDailyAssets.put(assetName, newAssetTo);						
-				
-				futures.add(executor.submit(new GenericEntityPersister<EventEntity>(eventDao, entity)));
+		    	if ( validator.isValidRecord(stringRecord)) {
+		    		saveErrorRecordToDb(stringRecord, futures);
+		    		continue;
+		    	}
+		    	saveGoodEventToDb(stringRecord, futures);
+		    	collectAssetTransferObjects(allDailyAssets, stringRecord);
 		    }
 		} catch (FileNotFoundException exception) {
 			log.error("Got error while trying to load Excel to Database.", exception);
 			throw new GenericReportingApplicationRuntimeException(exception);
 		}
 
+	}
+	
+	/**
+	 * USe this method to save the erroneous record to the 
+	 * persistent store.
+	 * 
+	 * @param stringRecord : The single erroneous record.
+	 * @param futures : All the Future object references of the event table update.
+	 */
+	private void saveErrorRecordToDb(List<String> stringRecord, List<Future<?>> futures) {
+		ErrorEventEntity entity = ErrorEventEntity
+									.builder()
+									.erroneousRecord(String.join("", stringRecord))
+									.build();
+		futures.add(executor.submit(new GenericEntityPersister<ErrorEventEntity>(errorEventDao, entity)));
+	}
+	
+	/**
+	 * USe this method to save the good event record to the 
+	 * persistent store.
+	 * 
+	 * @param stringRecord : The single good record.
+	 * @param futures : All the Future object references of the event table update.
+	 */
+	private void saveGoodEventToDb(List<String> stringRecord, List<Future<?>> futures) {
+		String assetName = stringRecord.get(0);
+    	Timestamp startTime = Timestamp.valueOf(stringRecord.get(1));
+    	Timestamp endTime = Timestamp.valueOf(stringRecord.get(2));
+    	int severity = Integer.parseInt(stringRecord.get(3));
+    	
+		EventEntity  entity = EventEntity
+							.builder()
+							.assetName(assetName)
+							.starTime(startTime)
+							.endTIme(endTime)
+							.severity(severity)
+							.build();
+		futures.add(executor.submit(new GenericEntityPersister<EventEntity>(eventDao, entity)));
+	}
+	
+	/**
+	 * USe this method to save all the 
+	 * transfer object to the collection of 
+	 * Transfer Objects.
+	 * 
+	 * @param allDailyAssets
+	 * @param stringRecord
+	 */
+	private void collectAssetTransferObjects(Map<String, AssetTo> allDailyAssets, List<String> stringRecord) {
+    	String assetName = stringRecord.get(0);
+    	Timestamp startTime = Timestamp.valueOf(stringRecord.get(1));
+    	Timestamp endTime = Timestamp.valueOf(stringRecord.get(2));
+    	int severity = Integer.parseInt(stringRecord.get(3));
+		AssetTo assetTo = allDailyAssets.get(assetName);
+		long newDownTime = 0;
+		long newUpTime = 100;
+
+		if (severity == 1) {
+			newDownTime = ((assetTo != null) ? assetTo.getTotalDownTime() : 0)
+					+ ((endTime.getTime() - startTime.getTime()) / (10 * 24 * 3600));
+			newUpTime = (100 - newDownTime);
+		}
+
+		AssetTo newAssetTo = AssetTo.builder().assetName(assetName).totalDownTime(newDownTime)
+				.totalUpTime(newUpTime).totalIncidents(( (assetTo != null) ? assetTo.getTotalIncidents() : 0  ) + 1)
+				.rating(( (assetTo != null) ? assetTo.getRating() : 0 ) + (severity == 1 ? 30 : 10)).build();
+		allDailyAssets.remove(assetName);
+		allDailyAssets.put(assetName, newAssetTo);					
 	}
 	
 	/**
