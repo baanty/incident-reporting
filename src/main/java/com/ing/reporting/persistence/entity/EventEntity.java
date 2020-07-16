@@ -42,4 +42,7 @@ public class EventEntity {
 	@Column(name = "SEVERITY")
 	private int severity;
 	
+	@Column(name = "CRR_STMP")
+	private Timestamp currentTimestamp;
+	
 }

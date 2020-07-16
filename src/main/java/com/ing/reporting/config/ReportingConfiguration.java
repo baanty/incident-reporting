@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 public class ReportingConfiguration {
-
+	
 	@Bean
 	public ExecutorService buidExecutor() {
 		ExecutorService executor = Executors.newSingleThreadExecutor();

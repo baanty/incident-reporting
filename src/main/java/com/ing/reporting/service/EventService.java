@@ -40,6 +40,21 @@ public class EventService {
 							.collect(Collectors.toList())
 							);
 	}
+	
+	/**
+	 * This method Returns a boolean result to 
+	 * inform the caller if todays results are
+	 * already loaded to the database. Handy, when doing 
+	 * day to day check of data load.
+	 * 
+	 * @return : Returns a boolean result to 
+	 * inform the caller if todays results are
+	 * already loaded to the database. Handy, when doing 
+	 * day to day check of data load. 
+	 */
+	public boolean isTodaysDataLoaded() {
+		return eventDao.findDataForCurrentDate() > 0 ;
+	}
 
 
 }

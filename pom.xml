@@ -19,7 +19,7 @@
 		<java.release>1.8</java.release>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<start-class>com.rabo.api.RaboCustomerMaintenance</start-class>
+		<start-class>com.ing.reporting.IngIncidentReporting</start-class>
 	</properties>
 
 	<dependencies>

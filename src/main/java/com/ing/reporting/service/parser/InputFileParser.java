@@ -96,6 +96,8 @@ public class InputFileParser {
 	 */
 	private synchronized void readCsvAndSaveEvents(Map<String, AssetTo> allDailyAssets, List<Future<?>> futures) {
 		
+
+		
 		try (Scanner scanner = new Scanner(new File(inputCsvFile))) {
 
 			while (scanner.hasNextLine()) {
@@ -155,6 +157,7 @@ public class InputFileParser {
 							.starTime(startTime)
 							.endTIme(endTime)
 							.severity(severity)
+							.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
 							.build();
 		futures.add(executor.submit(new GenericEntityPersister<EventEntity>(eventDao, entity)));
 	}

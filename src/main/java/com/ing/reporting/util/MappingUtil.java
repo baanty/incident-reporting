@@ -53,6 +53,7 @@ public final class MappingUtil {
 				.endTIme(eventTo.getEndTIme())
 				.starTime(eventTo.getStarTime())
 				.severity(eventTo.getSeverity())
+				.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
 				.build();
 	}
 	
