@@ -23,7 +23,7 @@ This is the header of the output CSV file. The Column headers may be changed. Bu
 The position should not be changed.
 input.file.header=Asset Name;Start Date;End Time ;Severity
 
-## job configuration. It is a 
+## job configuration.
 It is a CRON expression. The cron.expression.csv.load.job property stands for the configuration
 of the input CSV parsing. And the cron.expression.report.generator.job property configures the 
 schedule of the exported csv file.
