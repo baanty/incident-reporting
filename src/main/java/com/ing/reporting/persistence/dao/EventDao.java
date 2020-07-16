@@ -1,10 +1,10 @@
-package com.ing.reporting.dao;
+package com.ing.reporting.persistence.dao;
 
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import com.ing.reporting.entity.EventEntity;
+import com.ing.reporting.persistence.entity.EventEntity;
 
 @Repository
 @Profile({"TEST", "ACCP", "PROD"})

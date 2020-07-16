@@ -19,11 +19,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import com.ing.reporting.dao.AssetDao;
-import com.ing.reporting.dao.EventDao;
-import com.ing.reporting.entity.AssetEntity;
-import com.ing.reporting.entity.EventEntity;
 import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.persistence.dao.AssetDao;
+import com.ing.reporting.persistence.dao.EventDao;
+import com.ing.reporting.persistence.entity.AssetEntity;
+import com.ing.reporting.persistence.entity.EventEntity;
 import com.ing.reporting.service.parallal.GenericEntityPersister;
 import com.ing.reporting.to.AssetTo;
 import com.ing.reporting.util.MappingUtil;

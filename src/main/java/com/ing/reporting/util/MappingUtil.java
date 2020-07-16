@@ -3,8 +3,8 @@ package com.ing.reporting.util;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import com.ing.reporting.entity.AssetEntity;
-import com.ing.reporting.entity.EventEntity;
+import com.ing.reporting.persistence.entity.AssetEntity;
+import com.ing.reporting.persistence.entity.EventEntity;
 import com.ing.reporting.to.AssetTo;
 import com.ing.reporting.to.EventTo;
 

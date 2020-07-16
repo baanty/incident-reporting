@@ -1,4 +1,4 @@
-package com.ing.reporting.dao;
+package com.ing.reporting.persistence.dao;
 
 
 import java.sql.Timestamp;
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.ing.reporting.entity.AssetEntity;
+import com.ing.reporting.persistence.entity.AssetEntity;
 
 @Repository
 @Profile({"TEST", "ACCP", "PROD"})

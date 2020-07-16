@@ -1,4 +1,4 @@
-package com.ing.reporting.dao;
+package com.ing.reporting.persistence.dao;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;

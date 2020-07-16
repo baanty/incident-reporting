@@ -1,4 +1,4 @@
-package com.ing.reporting.entity;
+package com.ing.reporting.persistence.entity;
 
 import java.sql.Timestamp;
 

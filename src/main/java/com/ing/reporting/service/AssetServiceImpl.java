@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ing.reporting.dao.AssetDao;
+import com.ing.reporting.persistence.dao.AssetDao;
 import com.ing.reporting.to.AssetTo;
 import com.ing.reporting.util.MappingUtil;
 

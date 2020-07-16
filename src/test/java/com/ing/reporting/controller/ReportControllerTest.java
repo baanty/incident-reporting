@@ -41,7 +41,6 @@ public class ReportControllerTest {
 		ByteArrayOutputStream bos = httpServletResponse.getByteArrayOutputStream();
 		String output = bos.toString(Charset.defaultCharset().toString());
 		assertNotNull(output);
-		System.out.println(output);
 		assertEquals(EXPECTED_OUTPUT_ASSET_FILE, output );
 	}
 }

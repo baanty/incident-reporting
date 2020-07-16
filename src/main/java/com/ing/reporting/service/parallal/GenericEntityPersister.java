@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.springframework.util.CollectionUtils;
 
-import com.ing.reporting.dao.GenericDao;
+import com.ing.reporting.persistence.dao.GenericDao;
 
 /**
  * Use this Runner Thread to save the entity in parallal.

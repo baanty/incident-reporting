@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ing.reporting.dao.EventDao;
-import com.ing.reporting.entity.EventEntity;
+import com.ing.reporting.persistence.dao.EventDao;
+import com.ing.reporting.persistence.entity.EventEntity;
 import com.ing.reporting.to.EventTo;
 import com.ing.reporting.util.MappingUtil;
 
