@@ -42,7 +42,7 @@ public class ReportController {
 		httpServletResponse.setContentType("text/csv");
 		httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + csvFileName + "\"");
 		try (final CSVPrinter csvPrinter = new CSVPrinter(httpServletResponse.getWriter(),
-				CSVFormat.DEFAULT.withHeader("Asset Name", "Total Incidents", "Total Up Time", "Rating"))) {
+				CSVFormat.DEFAULT.withHeader("Asset Name", "Total Incidents", "Total Down Time", "Rating"))) {
 
 			List<AssetTo> daysAssets = service.findAssetStatisticsForThePresentDay();
 
@@ -50,7 +50,7 @@ public class ReportController {
 				daysAssets.stream().filter(anAssetTo -> anAssetTo != null).forEach(anAssetTo -> {
 					try {
 						csvPrinter.printRecord(Arrays.asList(anAssetTo.getAssetName(), anAssetTo.getTotalIncidents(),
-								anAssetTo.getTotalUpTime(), anAssetTo.getRating()));
+								anAssetTo.getTotalDownTime() + "%", anAssetTo.getRating()));
 					} catch (IOException exception) {
 						log.error("And error occured while writing data to CSV file.", exception);
 						throw new GenericReportingApplicationRuntimeException(exception);

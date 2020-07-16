@@ -1,4 +1,4 @@
-package com.ing.reporting.parser;
+package com.ing.reporting.service.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.ing.reporting.dao.AssetDao;
 import com.ing.reporting.dao.EventDao;
@@ -47,6 +48,9 @@ public class InputFileParser {
 	@Value("${input.csv.name:input.csv}")
 	String inputCsvFile;
 	
+	@Value("${input.file.header}")
+	String inputFileHeader;
+	
 	@Autowired
 	EventDao eventDao;
 	
@@ -76,12 +80,17 @@ public class InputFileParser {
 	 * @param futures : All the Future object references of the event table update.
 	 * @return
 	 */
-	private void readCsvAndSaveEvents(Map<String, AssetTo> allDailyAssets, List<Future<?>> futures) {
+	private synchronized void readCsvAndSaveEvents(Map<String, AssetTo> allDailyAssets, List<Future<?>> futures) {
 		
 		try (Scanner scanner = new Scanner(new File(inputCsvFile))) {
-		    
+
 			while (scanner.hasNextLine()) {
-		    	List<String> stringRecord = getRecordFromLine(scanner.nextLine());
+				String lineString = scanner.nextLine();
+				
+				if ( StringUtils.isEmpty(lineString) || lineString.contains(inputFileHeader)) {
+					continue;
+				}
+		    	List<String> stringRecord = getRecordFromLine(lineString);
 		    	String assetName = stringRecord.get(0);
 		    	Timestamp startTime = Timestamp.valueOf(stringRecord.get(1));
 		    	Timestamp endTime = Timestamp.valueOf(stringRecord.get(2));
@@ -96,28 +105,23 @@ public class InputFileParser {
 									.build();
 				
 				AssetTo assetTo = allDailyAssets.get(assetName);
+
 				
-				if ( assetTo != null ) {
-					long newDownTime = 0 ;
-					long newUpTime = 100 ;
-					
-					if ( severity == 1  ) {
-						newDownTime = assetTo.getTotalDownTime() + (( endTime.getTime() - startTime.getTime() )/ ( 10 * 24 * 3600 )) ;
-						newUpTime = ( 100 - newDownTime ) ;
-					}
-					
-					AssetTo newAssetTo = AssetTo
-											.builder()
-											.assetName(assetName)
-											.totalDownTime(newDownTime)
-											.totalUpTime(newUpTime)
-											.totalIncidents(assetTo.getTotalIncidents() + 1 )
-											.rating(assetTo.getRating() + ( severity == 1 ? 30 : 10 ))
-											.build();
-					allDailyAssets.remove(assetName);
-					allDailyAssets.put(assetName, newAssetTo);
-					
+				long newDownTime = 0;
+				long newUpTime = 100;
+
+				if (severity == 1) {
+					newDownTime = ((assetTo != null) ? assetTo.getTotalDownTime() : 0)
+							+ ((endTime.getTime() - startTime.getTime()) / (10 * 24 * 3600));
+					newUpTime = (100 - newDownTime);
 				}
+
+				AssetTo newAssetTo = AssetTo.builder().assetName(assetName).totalDownTime(newDownTime)
+						.totalUpTime(newUpTime).totalIncidents(( (assetTo != null) ? assetTo.getTotalIncidents() : 0  ) + 1)
+						.rating(( (assetTo != null) ? assetTo.getRating() : 0 ) + (severity == 1 ? 30 : 10)).build();
+				allDailyAssets.remove(assetName);
+				allDailyAssets.put(assetName, newAssetTo);						
+				
 				futures.add(executor.submit(new GenericEntityPersister<EventEntity>(eventDao, entity)));
 		    }
 		} catch (FileNotFoundException exception) {
