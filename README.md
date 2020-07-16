@@ -18,14 +18,15 @@ output.report.location=E:\\software\\installation\\gitrepo\\cts\\incident-report
 ## This is the name of the file which can be downloaded from the REST API.
 user.download.file.name=output.cvs
 
-## This is the header of the output CSV file. The COlumn headers may be changed. But
-## The position should not be changed.
+## Header of the Output CSV file.
+This is the header of the output CSV file. The Column headers may be changed. But
+The position should not be changed.
 input.file.header=Asset Name;Start Date;End Time ;Severity
 
-## This is the heart of the job configuration. It is a 
-## CRON expression. The cron.expression.csv.load.job property stands for the configuration
-## of the input CSV parsing. And the cron.expression.report.generator.job property configures the 
-## schedule of the exported csv file.
+## job configuration. It is a 
+It is a CRON expression. The cron.expression.csv.load.job property stands for the configuration
+of the input CSV parsing. And the cron.expression.report.generator.job property configures the 
+schedule of the exported csv file.
 
 cron.expression.csv.load.job=0 0 20 * * ?
 cron.expression.report.generator.job=0 0 20 * * ?
