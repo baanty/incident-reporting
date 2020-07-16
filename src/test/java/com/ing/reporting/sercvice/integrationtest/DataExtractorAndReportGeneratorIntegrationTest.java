@@ -30,11 +30,11 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 	InputFileParser parser;
 	
 	
-	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating\r\n" + 
-																"Homeloans,7,3%,130\r\n" + 
-																"Payments Gateway,11,0%,150\r\n" + 
-																"CRM,9,4%,230\r\n" + 
-																"Lending Department,4,6%,80\r\n" + 
+	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating" + 
+																"Homeloans,7,3%,130" + 
+																"Payments Gateway,11,0%,150" + 
+																"CRM,9,4%,230" + 
+																"Lending Department,4,6%,80" + 
 																"Insurance,16,0%,260";
 	
 	@Test
@@ -45,7 +45,7 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 		extractor.generateDailyReoport();
 		assertTrue(Files.exists(Paths.get(outputReportLocation)));
 		
-		String actualOutPut = String.join("\r\n", Files.readAllLines(Paths.get(outputReportLocation), Charset.defaultCharset()));
+		String actualOutPut = String.join("", Files.readAllLines(Paths.get(outputReportLocation), Charset.defaultCharset()));
 		System.out.println(actualOutPut);
 		assertEquals(EXPECTED_OUTPUT_ASSET_FILE, actualOutPut);
 		Files.delete(Paths.get(outputReportLocation));
