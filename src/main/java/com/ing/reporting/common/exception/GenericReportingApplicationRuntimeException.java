@@ -1,4 +1,4 @@
-package com.ing.reporting.exception;
+package com.ing.reporting.common.exception;
 
 /**
  * Use this exception to catch generic application exceptions and 

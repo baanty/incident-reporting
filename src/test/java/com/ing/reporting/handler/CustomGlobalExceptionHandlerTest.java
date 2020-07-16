@@ -14,8 +14,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
-import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
-import com.ing.reporting.jsonbody.CustomErrorResponse;
+import com.ing.reporting.common.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.presentation.errorresponsehandler.CustomGlobalExceptionHandler;
+import com.ing.reporting.presentation.jsonbody.CustomErrorResponse;
 
 class CustomGlobalExceptionHandlerTest {
 

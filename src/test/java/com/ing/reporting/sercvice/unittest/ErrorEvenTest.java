@@ -16,10 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.ing.reporting.common.to.ErrorEventTo;
 import com.ing.reporting.persistence.dao.ErrorEventDao;
 import com.ing.reporting.persistence.entity.ErrorEventEntity;
 import com.ing.reporting.service.ErrorEventService;
-import com.ing.reporting.to.ErrorEventTo;
 
 class ErrorEvenTest {
 

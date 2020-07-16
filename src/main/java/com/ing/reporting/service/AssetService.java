@@ -2,7 +2,7 @@ package com.ing.reporting.service;
 
 import java.util.List;
 
-import com.ing.reporting.to.AssetTo;
+import com.ing.reporting.common.to.AssetTo;
 
 /**
  * Use this interface to get data from the DB 

@@ -1,4 +1,4 @@
-package com.ing.reporting.service.parallal;
+package com.ing.reporting.service.thread;
 
 import java.util.Collection;
 
@@ -11,7 +11,7 @@ import com.ing.reporting.persistence.dao.GenericDao;
  * @author Pijush Kanti Das
  *
  */
-public class GenericEntityPersister<E> implements Runnable {
+public class GenericEntityPersisterServiceThread<E> implements Runnable {
 	
 	private final GenericDao<E, ?> dao;
 	
@@ -47,7 +47,7 @@ public class GenericEntityPersister<E> implements Runnable {
 	 * @param dao : The DAO for appropriate entity persisting.
 	 * @param entity : The Single enity to persist.
 	 */
-	public GenericEntityPersister(final GenericDao<E, ?> dao, final E entity) {
+	public GenericEntityPersisterServiceThread(final GenericDao<E, ?> dao, final E entity) {
 		super();
 		this.dao = dao;
 		this.entity = entity;
@@ -61,7 +61,7 @@ public class GenericEntityPersister<E> implements Runnable {
 	 * @param dao : The DAO for appropriate entity persisting.
 	 * @param entity : The Single enity to persist.
 	 */
-	public GenericEntityPersister(final GenericDao<E, ?> dao, final Collection<E> entities) {
+	public GenericEntityPersisterServiceThread(final GenericDao<E, ?> dao, final Collection<E> entities) {
 		super();
 		this.dao = dao;
 		this.entities = entities;

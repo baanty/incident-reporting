@@ -4,11 +4,11 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import com.ing.reporting.common.to.AssetTo;
+import com.ing.reporting.common.to.EventTo;
+import com.ing.reporting.common.util.MappingUtil;
 import com.ing.reporting.persistence.entity.AssetEntity;
 import com.ing.reporting.persistence.entity.EventEntity;
-import com.ing.reporting.to.AssetTo;
-import com.ing.reporting.to.EventTo;
-import com.ing.reporting.util.MappingUtil;
 
 class MappingUtilTest {
 

@@ -1,4 +1,4 @@
-package com.ing.reporting.validator;
+package com.ing.reporting.common.validator;
 
 import java.sql.Timestamp;
 import java.util.List;

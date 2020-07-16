@@ -1,14 +1,15 @@
-package com.ing.reporting.controller;
+package com.ing.reporting.presentation.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+ 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.common.exception.GenericReportingApplicationRuntimeException;
 import com.ing.reporting.service.WriterService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,12 +32,11 @@ public class ReportController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/findDailyAssets")
+	@GetMapping(value = "/findDailyAssets" , produces = "text/csv")
 	public void findDailyAssets(final HttpServletResponse httpServletResponse) {
 
 		try {
-			httpServletResponse.setContentType("text/csv");
-			httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + csvFileName + "\"");
+			httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + csvFileName + "\"");			
 			service.writeDailyAssetRecordsOnOutStream(httpServletResponse.getWriter());
 		} catch (Exception exception) {
 			log.error("And error occured while writing data to CSV file.", exception);
@@ -51,11 +51,10 @@ public class ReportController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/findDailyErrors")
+	@GetMapping(value = "/findDailyErrors" , produces = "text/csv")
 	public void findDailyErrors(final HttpServletResponse httpServletResponse) {
 
 		try {
-			httpServletResponse.setContentType("text/csv");
 			httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + errorReportName + "\"");
 			service.writeDailyErrorRecordsOnOutStream(httpServletResponse.getWriter());
 		} catch (Exception exception) {

@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ing.reporting.common.to.ErrorEventTo;
+import com.ing.reporting.common.util.MappingUtil;
 import com.ing.reporting.persistence.dao.ErrorEventDao;
-import com.ing.reporting.to.ErrorEventTo;
-import com.ing.reporting.util.MappingUtil;
 
 @Service
 public class ErrorEventService {

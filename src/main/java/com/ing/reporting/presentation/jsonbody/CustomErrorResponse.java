@@ -1,4 +1,4 @@
-package com.ing.reporting.jsonbody;
+package com.ing.reporting.presentation.jsonbody;
 
 import java.time.LocalDateTime;
 

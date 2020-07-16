@@ -8,10 +8,9 @@ import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.common.exception.GenericReportingApplicationRuntimeException;
 import com.ing.reporting.service.WriterService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class DataExtractorAndReportGenerator {
+public class DataExtractorService {
 
 	@Value("${output.report.location}")
 	String outputReportLocation;
@@ -43,7 +42,6 @@ public class DataExtractorAndReportGenerator {
 	/**
 	 * Use this method to generate the report and store it at the specific location.
 	 */
-	@Scheduled(cron = "${cron.expression.report.generator.job}")
 	public void generateDailyReoport() {
 		Path outputFilePath = Paths.get(outputReportLocation);
 
@@ -68,7 +66,6 @@ public class DataExtractorAndReportGenerator {
 	 * Use this method to generate the error 
 	 * report and store it at the specific location.
 	 */
-	@Scheduled(cron = "${cron.expression.error.report.generator.job}")
 	public void generateDailyErrorReoport() {
 		Path outputFilePath = Paths.get(outputErrorReportLocation);
 

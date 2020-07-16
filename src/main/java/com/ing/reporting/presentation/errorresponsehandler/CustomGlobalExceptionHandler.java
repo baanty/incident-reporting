@@ -1,4 +1,4 @@
-package com.ing.reporting.handler;
+package com.ing.reporting.presentation.errorresponsehandler;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
-import com.ing.reporting.jsonbody.CustomErrorResponse;
+import com.ing.reporting.common.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.presentation.jsonbody.CustomErrorResponse;
 
 /**
  * Use this class to Handle all generci Rest controller exceptions.

@@ -14,10 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.ing.reporting.common.to.AssetTo;
 import com.ing.reporting.persistence.dao.AssetDao;
 import com.ing.reporting.persistence.entity.AssetEntity;
 import com.ing.reporting.service.AssetServiceImpl;
-import com.ing.reporting.to.AssetTo;
 
 class AssetServiceImplTest {
 

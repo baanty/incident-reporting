@@ -7,8 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.ing.reporting.controller.ReportController;
-import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.common.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.presentation.controller.ReportController;
 import com.ing.reporting.service.WriterService;
 
 

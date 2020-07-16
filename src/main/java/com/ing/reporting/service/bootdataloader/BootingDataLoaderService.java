@@ -1,4 +1,4 @@
-package com.ing.reporting.component;
+package com.ing.reporting.service.bootdataloader;
 
 import javax.annotation.PostConstruct;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ing.reporting.service.EventService;
-import com.ing.reporting.service.parser.InputFileParser;
+import com.ing.reporting.service.parser.InputFileParseService;
 
 /**
  * USe this class to do initial activites in Spring. SHould not be used as a bean in other
@@ -15,13 +15,13 @@ import com.ing.reporting.service.parser.InputFileParser;
  *
  */
 @Component
-public class BootingDataLoad {
+public class BootingDataLoaderService {
 
 	@Autowired
 	EventService eventService;
 	 
 	@Autowired
-	InputFileParser parser;
+	InputFileParseService parser;
 	
 	@PostConstruct
 	public void bootApplication() {

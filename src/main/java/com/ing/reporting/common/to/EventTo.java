@@ -1,4 +1,4 @@
-package com.ing.reporting.to;
+package com.ing.reporting.common.to;
 
 import java.sql.Timestamp;
 

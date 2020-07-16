@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import com.ing.reporting.service.extractor.DataExtractorAndReportGenerator;
-import com.ing.reporting.service.parser.InputFileParser;
+import com.ing.reporting.service.extractor.DataExtractorService;
+import com.ing.reporting.service.parser.InputFileParseService;
 
 @SpringBootTest
 @Ignore
@@ -30,10 +30,10 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 	
 	
 	@Autowired
-	DataExtractorAndReportGenerator extractor;
+	DataExtractorService extractor;
 	
 	@Autowired
-	InputFileParser parser;
+	InputFileParseService parser;
 	
 	
 	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating" + 

@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
-import com.ing.reporting.to.AssetTo;
-import com.ing.reporting.to.ErrorEventTo;
+import com.ing.reporting.common.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.common.to.AssetTo;
+import com.ing.reporting.common.to.ErrorEventTo;
 
 import lombok.extern.slf4j.Slf4j;
 

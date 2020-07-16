@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import com.ing.reporting.controller.ReportController;
-import com.ing.reporting.service.parser.InputFileParser;
+import com.ing.reporting.presentation.controller.ReportController;
+import com.ing.reporting.service.parser.InputFileParseService;
 import com.ing.reporting.stub.HttpServletResponseStub;
 
 @SpringBootTest
@@ -24,7 +24,7 @@ public class ReportControllerTest {
 	ReportController controller;
 	
 	@Autowired
-	InputFileParser parser;
+	InputFileParseService parser;
 	
 	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating\r\n" + 
 																"Homeloans,7,3%,130\r\n" + 

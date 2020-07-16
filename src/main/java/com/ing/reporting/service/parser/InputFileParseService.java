@@ -15,22 +15,21 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import com.ing.reporting.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.common.exception.GenericReportingApplicationRuntimeException;
+import com.ing.reporting.common.to.AssetTo;
+import com.ing.reporting.common.util.MappingUtil;
+import com.ing.reporting.common.validator.InputRecordValidator;
 import com.ing.reporting.persistence.dao.AssetDao;
 import com.ing.reporting.persistence.dao.ErrorEventDao;
 import com.ing.reporting.persistence.dao.EventDao;
 import com.ing.reporting.persistence.entity.AssetEntity;
 import com.ing.reporting.persistence.entity.ErrorEventEntity;
 import com.ing.reporting.persistence.entity.EventEntity;
-import com.ing.reporting.service.parallal.GenericEntityPersister;
-import com.ing.reporting.to.AssetTo;
-import com.ing.reporting.util.MappingUtil;
-import com.ing.reporting.validator.InputRecordValidator;
+import com.ing.reporting.service.thread.GenericEntityPersisterServiceThread;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class InputFileParser {
+public class InputFileParseService {
 
 	@Value("${input.csv.name:input.csv}")
 	String inputCsvFile;
@@ -135,7 +134,7 @@ public class InputFileParser {
 									.erroneousRecord(String.join("", stringRecord))
 									.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
 									.build();
-		futures.add(executor.submit(new GenericEntityPersister<ErrorEventEntity>(errorEventDao, entity)));
+		futures.add(executor.submit(new GenericEntityPersisterServiceThread<ErrorEventEntity>(errorEventDao, entity)));
 	}
 	
 	/**
@@ -159,7 +158,7 @@ public class InputFileParser {
 							.severity(severity)
 							.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
 							.build();
-		futures.add(executor.submit(new GenericEntityPersister<EventEntity>(eventDao, entity)));
+		futures.add(executor.submit(new GenericEntityPersisterServiceThread<EventEntity>(eventDao, entity)));
 	}
 	
 	/**
@@ -208,7 +207,7 @@ public class InputFileParser {
 											.filter(anAsset -> anAsset != null )
 											.map(MappingUtil::buildTransferObjectToBusinessObject)
 											.collect(Collectors.toList());
-			futures.add(executor.submit(new GenericEntityPersister<AssetEntity>(assetDao, assets)));
+			futures.add(executor.submit(new GenericEntityPersisterServiceThread<AssetEntity>(assetDao, assets)));
 		}
 	}
 	
@@ -218,7 +217,6 @@ public class InputFileParser {
 	 * Please mark the method for a cron job run at a certain point
 	 * in the day.
 	 */
-	@Scheduled(cron = "${cron.expression.csv.load.job}")
 	public void readCsvAtScheduleAndPersistData() {
 		try {
 			List<Future<?>> futures = new ArrayList<Future<?>>();

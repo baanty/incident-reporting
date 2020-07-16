@@ -1,14 +1,14 @@
-package com.ing.reporting.util;
+package com.ing.reporting.common.util;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import com.ing.reporting.common.to.AssetTo;
+import com.ing.reporting.common.to.ErrorEventTo;
+import com.ing.reporting.common.to.EventTo;
 import com.ing.reporting.persistence.entity.AssetEntity;
 import com.ing.reporting.persistence.entity.ErrorEventEntity;
 import com.ing.reporting.persistence.entity.EventEntity;
-import com.ing.reporting.to.AssetTo;
-import com.ing.reporting.to.ErrorEventTo;
-import com.ing.reporting.to.EventTo;
 
 /**
  * This utility class will do the object to object data 
