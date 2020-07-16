@@ -30,3 +30,8 @@ schedule of the exported csv file.
 
 cron.expression.csv.load.job=0 0 20 * * ?
 cron.expression.report.generator.job=0 0 20 * * ?
+
+## Error Job configuration
+There is another job that generates the error report. To run the
+job, please configure the cron expression cron.expression.error.report.generator.job .
+The url, <context-root>/findDailyErrors gives teh error report.
