@@ -33,7 +33,10 @@ public class DataExtractorAndReportGenerator {
 
 	@Value("${output.report.location}")
 	String outputReportLocation;
-
+	
+	@Value("${output.error.report.location}")
+	String outputErrorReportLocation;
+	
 	@Autowired
 	WriterService writerService;
 
@@ -56,6 +59,31 @@ public class DataExtractorAndReportGenerator {
 			writer.close();
 		} catch (IOException exception) {
 			log.error("Error occured while trying to write the output file.");
+			throw new GenericReportingApplicationRuntimeException(exception);
+		}
+
+	}
+	
+	/**
+	 * Use this method to generate the error 
+	 * report and store it at the specific location.
+	 */
+	@Scheduled(cron = "${cron.expression.error.report.generator.job}")
+	public void generateDailyErrorReoport() {
+		Path outputFilePath = Paths.get(outputErrorReportLocation);
+
+		try {
+			if (Files.exists(outputFilePath)) {
+				Files.delete(outputFilePath);
+
+			}
+			Files.createFile(Paths.get(outputErrorReportLocation));
+
+			BufferedWriter writer = Files.newBufferedWriter(outputFilePath);
+			writerService.writeDailyErrorRecordsOnOutStream(writer);
+			writer.close();
+		} catch (IOException exception) {
+			log.error("Error occured while trying to write the error output file.");
 			throw new GenericReportingApplicationRuntimeException(exception);
 		}
 
