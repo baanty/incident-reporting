@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -24,8 +25,15 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class WriterService {
 
+	@Autowired
 	AssetService service;
 
+	/**
+	 * USe this methdo to write the utput data to a 
+	 * CSV file and export it.
+	 * @param appendable : The CSV file output stream source.
+	 * 
+	 */
 	public void writeOutStream(Appendable appendable) {
 		
 		try (final CSVPrinter csvPrinter = new CSVPrinter(appendable,

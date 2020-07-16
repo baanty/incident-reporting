@@ -1,7 +1,5 @@
 package com.ing.reporting.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +29,13 @@ public class ReportController {
 	 * @return
 	 */
 	@GetMapping("/findDailyAssets")
-	void findDailyAssets(final HttpServletResponse httpServletResponse) {
+	public void findDailyAssets(final HttpServletResponse httpServletResponse) {
 
 		try {
 			httpServletResponse.setContentType("text/csv");
 			httpServletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + csvFileName + "\"");
 			service.writeOutStream(httpServletResponse.getWriter());
-		} catch (IOException exception) {
+		} catch (Exception exception) {
 			log.error("And error occured while writing data to CSV file.", exception);
 			throw new GenericReportingApplicationRuntimeException(exception);
 		}

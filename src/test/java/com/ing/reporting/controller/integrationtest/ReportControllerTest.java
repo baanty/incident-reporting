@@ -1,4 +1,4 @@
-package com.ing.reporting.controller;
+package com.ing.reporting.controller.integrationtest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import com.ing.reporting.controller.ReportController;
 import com.ing.reporting.service.parser.InputFileParser;
 import com.ing.reporting.stub.HttpServletResponseStub;
 
