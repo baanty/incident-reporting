@@ -1,5 +1,7 @@
 package com.ing.reporting.common.to;
 
+import java.util.Date;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,15 +13,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class AssetTo {
+	
+	private int id;
 
 	private String assetName;
 
-	private int totalIncidents;
+	private long totalIncidents;
 
 	private long totalUpTime;
 	
 	private long totalDownTime;
 	
-	private int rating;
+	private long rating;
+	
+	private Date currentTimestamp;
 	
 }

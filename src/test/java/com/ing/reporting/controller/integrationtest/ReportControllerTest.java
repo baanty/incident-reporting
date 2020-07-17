@@ -27,11 +27,11 @@ public class ReportControllerTest {
 	InputFileParseService parser;
 	
 	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating\r\n" + 
-																"Homeloans,7,3%,130\r\n" + 
-																"Payments Gateway,11,0%,150\r\n" + 
-																"CRM,9,4%,230\r\n" + 
-																"Lending Department,4,6%,80\r\n" + 
-																"Insurance,16,0%,260\r\n";
+			"CRM,18,57%,500\r\n" + 
+			"Homeloans,14,74%,340\r\n" + 
+			"Insurance,32,6%,740\r\n" + 
+			"Lending Department,8,83%,200\r\n" + 
+			"Payments Gateway,22,73%,480\r\n";
 	private static final String EXPECTED_OUTPUT_PREFIX_ERROR_FILE = "Erroneous Record,Time\r\n" + 
 			"Payments Gateway";
 	@Test
@@ -44,6 +44,7 @@ public class ReportControllerTest {
 		ByteArrayOutputStream bos = httpServletResponse.getByteArrayOutputStream();
 		String output = bos.toString(Charset.defaultCharset().toString());
 		assertNotNull(output);
+		System.out.println(output);
 		assertEquals(EXPECTED_OUTPUT_ASSET_FILE, output );
 	}
 	

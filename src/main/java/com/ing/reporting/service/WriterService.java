@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WriterService {
 
 	@Autowired
-	AssetService service;
+	EventService eventService;
 	
 	@Autowired
 	ErrorEventService errorEventService;
@@ -43,7 +43,7 @@ public class WriterService {
 		try (final CSVPrinter csvPrinter = new CSVPrinter(appendable,
 				CSVFormat.DEFAULT.withHeader("Asset Name", "Total Incidents", "Total Down Time", "Rating"))) {
 
-			List<AssetTo> daysAssets = service.findAssetStatisticsForThePresentDay();
+			List<AssetTo> daysAssets = eventService.getAssetsForDay();
 
 			if (!CollectionUtils.isEmpty(daysAssets)) {
 				daysAssets.stream().filter(anAssetTo -> anAssetTo != null).forEach(anAssetTo -> {

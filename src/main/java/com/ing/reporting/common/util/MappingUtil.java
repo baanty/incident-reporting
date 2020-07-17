@@ -3,10 +3,8 @@ package com.ing.reporting.common.util;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import com.ing.reporting.common.to.AssetTo;
 import com.ing.reporting.common.to.ErrorEventTo;
 import com.ing.reporting.common.to.EventTo;
-import com.ing.reporting.persistence.entity.AssetEntity;
 import com.ing.reporting.persistence.entity.ErrorEventEntity;
 import com.ing.reporting.persistence.entity.EventEntity;
 
@@ -57,39 +55,6 @@ public final class MappingUtil {
 				.build();
 	}
 	
-	
-	
-	/**
-	 * Use this method to build Transfer Objects from business object.
-	 * @param AssetEntity : The BUsiness Object.
-	 * @return : The BUilt Transfer Object
-	 */
-	public static final AssetTo buildBusinessObjectToTransferObject(AssetEntity assetEntity) {
-		return AssetTo.builder()
-				.assetName(assetEntity.getAssetName())
-				.totalDownTime(assetEntity.getTotalDownTime())
-				.totalUpTime(assetEntity.getTotalUpTime())
-				.rating(assetEntity.getRating())
-				.totalIncidents(assetEntity.getTotalIncidents())
-				.build();
-	}
-	
-	
-	/**
-	 * Use this method to build business Objects from Transfer  object.
-	 * @param AssetTo : The Transfer Object.
-	 * @return : The BUilt business Object
-	 */
-	public static final AssetEntity buildTransferObjectToBusinessObject(AssetTo eventTo) {
-		return AssetEntity.builder()
-				.assetName(eventTo.getAssetName())
-				.totalDownTime(eventTo.getTotalDownTime())
-				.totalUpTime(eventTo.getTotalUpTime())
-				.rating(eventTo.getRating())
-				.totalIncidents(eventTo.getTotalIncidents())
-				.currentTimestamp(Timestamp.valueOf(LocalDateTime.now()))
-				.build();
-	}
 	
 	
 	/**

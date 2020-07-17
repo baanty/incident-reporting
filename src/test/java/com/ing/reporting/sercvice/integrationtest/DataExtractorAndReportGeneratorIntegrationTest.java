@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +18,6 @@ import com.ing.reporting.service.extractor.DataExtractorService;
 import com.ing.reporting.service.parser.InputFileParseService;
 
 @SpringBootTest
-@Ignore
 class DataExtractorAndReportGeneratorIntegrationTest {
 
 	@Value("${output.report.location}")
@@ -36,12 +34,7 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 	InputFileParseService parser;
 	
 	
-	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating" + 
-																"Homeloans,7,3%,130" + 
-																"Payments Gateway,11,0%,150" + 
-																"CRM,9,4%,230" + 
-																"Lending Department,4,6%,80" + 
-																"Insurance,16,0%,260";
+	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,RatingCRM,18,57%,500Homeloans,14,74%,340Insurance,32,6%,740Lending Department,8,83%,200Payments Gateway,22,73%,480";
 	
 	private static final String EXPECTED_OUTPUT_PREFIX_ERROR_FILE = "Erroneous Record,TimePayments Gateway";
 	

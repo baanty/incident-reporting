@@ -1,8 +1,11 @@
 package com.ing.reporting.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ing.reporting.common.to.AssetTo;
 import com.ing.reporting.persistence.dao.EventDao;
 
 @Service
@@ -27,5 +30,13 @@ public class EventService {
 		return eventDao.findDataForCurrentDate() > 0 ;
 	}
 
+	/**
+	 * USe this method to get all the assets for the
+	 * day.
+	 * @return : A collection of assets for the day.
+	 */
+	public List<AssetTo> getAssetsForDay() {
+		return eventDao.getAssetsForDay();
+	}
 
 }
