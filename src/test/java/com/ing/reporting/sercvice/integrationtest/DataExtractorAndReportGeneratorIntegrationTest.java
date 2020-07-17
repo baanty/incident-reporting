@@ -36,7 +36,7 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 	InputFileParseService parser;
 	
 	
-	private static final String EXPECTED_OUTPUT_ASSET_FILE = "\"Asset Name,Total Incidents,Total Down Time,Rating\"CRM,18,57%,500Homeloans,14,74%,340Insurance,32,6%,740Lending Department,8,83%,200Payments Gateway,22,73%,480";
+	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,RatingCRM,18,57%,500Homeloans,14,74%,340Insurance,32,6%,740Lending Department,8,83%,200Payments Gateway,22,73%,480";
 	
 	private static final String EXPECTED_OUTPUT_PREFIX_ERROR_FILE = "Erroneous Record,TimePayments Gateway";
 	
