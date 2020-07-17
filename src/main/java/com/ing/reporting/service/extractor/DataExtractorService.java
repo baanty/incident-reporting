@@ -86,6 +86,7 @@ public class DataExtractorService {
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Authorization", "Basic " + base64Creds);
+			headers.add("Accept", "text/csv");
 			
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
 			HttpEntity<String> entity = new HttpEntity<>(headers);
