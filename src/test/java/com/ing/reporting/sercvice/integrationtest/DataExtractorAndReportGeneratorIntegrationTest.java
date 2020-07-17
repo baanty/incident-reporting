@@ -8,11 +8,13 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.web.client.ResourceAccessException;
 
 import com.ing.reporting.service.extractor.DataExtractorService;
 import com.ing.reporting.service.parser.InputFileParseService;
@@ -48,6 +50,16 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 		String actualOutPut = String.join("", Files.readAllLines(Paths.get(outputReportLocation), Charset.defaultCharset()));
 		Files.delete(Paths.get(outputReportLocation));
 		assertEquals(EXPECTED_OUTPUT_ASSET_FILE, actualOutPut);
+	}
+	
+	
+	@Test
+	@DirtiesContext
+	void testGenerateDailyReoportWithRestCall() throws IOException {
+		parser.readCsvAtScheduleAndPersistData();
+		/* A connection exception is expected. Because when the test runs, the application
+		 * is still not deployed. Ideally it should be called from outside the project context.*/
+		Assertions.assertThrows(ResourceAccessException.class, () -> extractor.generateDailyReportByRestApiCall());
 	}
 
 	@Test

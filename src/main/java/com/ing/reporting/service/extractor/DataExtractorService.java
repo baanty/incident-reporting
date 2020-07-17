@@ -2,6 +2,7 @@ package com.ing.reporting.service.extractor;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -87,8 +88,8 @@ public class DataExtractorService {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Authorization", "Basic " + base64Creds);
 			headers.add("Accept", "text/csv");
-			
-			headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
+			MediaType MEDIA_TYPE = new MediaType("text", "csv", Charset.forName("utf-8"));
+			headers.setAccept(Arrays.asList(MEDIA_TYPE));
 			HttpEntity<String> entity = new HttpEntity<>(headers);
 			ResponseEntity<byte[]> response = restTemplate.exchange(urlForDailyReport,HttpMethod.GET, entity, byte[].class);
 			Files.write(Paths.get(outputReportLocation), response.getBody());
