@@ -34,7 +34,7 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 	InputFileParseService parser;
 	
 	
-	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,RatingCRM,18,57%,500Homeloans,14,74%,340Insurance,32,6%,740Lending Department,8,83%,200Payments Gateway,22,73%,480";
+	private static final String EXPECTED_OUTPUT_ASSET_FILE = "\"Asset Name,Total Incidents,Total Down Time,Rating\"CRM,18,57%,500Homeloans,14,74%,340Insurance,32,6%,740Lending Department,8,83%,200Payments Gateway,22,73%,480";
 	
 	private static final String EXPECTED_OUTPUT_PREFIX_ERROR_FILE = "Erroneous Record,TimePayments Gateway";
 	
@@ -42,7 +42,7 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 	@DirtiesContext
 	void testGenerateDailyReoport() throws IOException {
 		parser.readCsvAtScheduleAndPersistData();
-		extractor.generateDailyReoport();
+		extractor.generateDailyReportByServiceCall();
 		assertTrue("The " + outputReportLocation + "Does not exist. It must exist.", Files.exists(Paths.get(outputReportLocation).getParent()));
 		
 		String actualOutPut = String.join("", Files.readAllLines(Paths.get(outputReportLocation), Charset.defaultCharset()));
@@ -54,7 +54,7 @@ class DataExtractorAndReportGeneratorIntegrationTest {
 	@DirtiesContext
 	void testGenerateDailyErrorReoport() throws IOException {
 		parser.readCsvAtScheduleAndPersistData();
-		extractor.generateDailyErrorReoport();
+		extractor.generateDailyErrorReport();
 		assertTrue("The " + outputErrorReportLocation + "Does not exist. It must exist.", Files.exists(Paths.get(outputReportLocation).getParent()));
 		
 		String actualOutPut = String.join("", Files.readAllLines(Paths.get(outputErrorReportLocation), Charset.defaultCharset()));

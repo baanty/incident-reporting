@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -31,6 +32,9 @@ public class WriterService {
 	
 	@Autowired
 	ErrorEventService errorEventService;
+	
+	@Value("${output.file.header}")
+	private String outputFileHeader;
 
 	/**
 	 * USe this methdo to write the utput data to a 
@@ -41,7 +45,7 @@ public class WriterService {
 	public void writeDailyAssetRecordsOnOutStream(Appendable appendable) {
 		
 		try (final CSVPrinter csvPrinter = new CSVPrinter(appendable,
-				CSVFormat.DEFAULT.withHeader("Asset Name", "Total Incidents", "Total Down Time", "Rating"))) {
+				CSVFormat.DEFAULT.withHeader(outputFileHeader))) {
 
 			List<AssetTo> daysAssets = eventService.getAssetsForDay();
 

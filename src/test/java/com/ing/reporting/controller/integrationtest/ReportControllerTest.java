@@ -14,8 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.ing.reporting.presentation.controller.ReportController;
+import com.ing.reporting.presentation.httpresponsestub.HttpServletResponseStub;
 import com.ing.reporting.service.parser.InputFileParseService;
-import com.ing.reporting.stub.HttpServletResponseStub;
 
 @SpringBootTest
 public class ReportControllerTest {
@@ -26,7 +26,7 @@ public class ReportControllerTest {
 	@Autowired
 	InputFileParseService parser;
 	
-	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating\r\n" + 
+	private static final String EXPECTED_OUTPUT_ASSET_FILE = "\"Asset Name,Total Incidents,Total Down Time,Rating\"\r\n" + 
 			"CRM,18,57%,500\r\n" + 
 			"Homeloans,14,74%,340\r\n" + 
 			"Insurance,32,6%,740\r\n" + 

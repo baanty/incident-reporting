@@ -44,7 +44,7 @@ public class GenericEntityPersisterServiceThread<E> implements Runnable {
 	/**
 	 * Use this constructor to create a <code>Runnable</code> instance to
 	 * save the single entity in the DB.
-	 * @param dao : The DAO for appropriate entity persisting.
+	 * @param service : The DAO for appropriate entity persisting.
 	 * @param entity : The Single enity to persist.
 	 */
 	public GenericEntityPersisterServiceThread(final GenericDao<E, ?> dao, final E entity) {
@@ -58,7 +58,7 @@ public class GenericEntityPersisterServiceThread<E> implements Runnable {
 	/**
 	 * Use this constructor to create a <code>Runnable</code> instance to
 	 * save the entities in the DB.
-	 * @param dao : The DAO for appropriate entity persisting.
+	 * @param service : The DAO for appropriate entity persisting.
 	 * @param entity : The Single enity to persist.
 	 */
 	public GenericEntityPersisterServiceThread(final GenericDao<E, ?> dao, final Collection<E> entities) {

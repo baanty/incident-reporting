@@ -22,7 +22,7 @@ public class CsvExtractionSchedulerService {
 	 */
 	@Scheduled(cron = "${cron.expression.error.report.generator.job}")
 	public void generateDailyErrorReoport() {
-		extractor.generateDailyErrorReoport();
+		extractor.generateDailyErrorReport();
 	}
 	
 	/**
@@ -30,6 +30,6 @@ public class CsvExtractionSchedulerService {
 	 */
 	@Scheduled(cron = "${cron.expression.report.generator.job}")
 	public void generateDailyReoport() {
-		extractor.generateDailyReoport();
+		extractor.generateDailyReportByRestApiCall();
 	}
 }
