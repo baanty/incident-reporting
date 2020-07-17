@@ -25,7 +25,7 @@ public class ReportController {
 	@Value("${user.download.file.name}")
 	private String csvFileName;
 	
-	@Value("${user.download.error.file.name")
+	@Value("${user.download.error.file.name}")
 	private String errorReportName;
 	/**
 	 * Use this method to find all the customers from the controller.
