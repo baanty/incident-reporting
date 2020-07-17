@@ -26,7 +26,7 @@ public class ReportControllerTest {
 	@Autowired
 	InputFileParseService parser;
 	
-	private static final String EXPECTED_OUTPUT_ASSET_FILE = "\"Asset Name,Total Incidents,Total Down Time,Rating\"\r\n" + 
+	private static final String EXPECTED_OUTPUT_ASSET_FILE = "Asset Name,Total Incidents,Total Down Time,Rating\r\n" + 
 			"CRM,18,57%,500\r\n" + 
 			"Homeloans,14,74%,340\r\n" + 
 			"Insurance,32,6%,740\r\n" + 

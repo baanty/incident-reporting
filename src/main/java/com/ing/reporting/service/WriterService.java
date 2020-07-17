@@ -45,7 +45,7 @@ public class WriterService {
 	public void writeDailyAssetRecordsOnOutStream(Appendable appendable) {
 		
 		try (final CSVPrinter csvPrinter = new CSVPrinter(appendable,
-				CSVFormat.DEFAULT.withHeader(outputFileHeader))) {
+				CSVFormat.DEFAULT.withHeader(outputFileHeader.split(",")))) {
 
 			List<AssetTo> daysAssets = eventService.getAssetsForDay();
 
