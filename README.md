@@ -35,3 +35,13 @@ cron.expression.report.generator.job=0 0 20 * * ?
 There is another job that generates the error report. To run the
 job, please configure the cron expression cron.expression.error.report.generator.job .
 The url, <context-root>/findDailyErrors gives the error report.
+
+## Downloading the CSV reports after deploying the application.
+After the application is deployed, it can be downloaded from the below URLs. It is assumed that the application is deployed in localhost.
+
+1) The asset report download URL will be - http://localhost:8081/reporting/findDailyAssets
+2) The error report download URL will be - http://localhost:8081/reporting/findDailyErrors
+
+In both the URLs, the below credential can be used for the time being.
+	User Id - admin
+	Password - password
