@@ -1,8 +1,10 @@
 # incident-reporting
 
 ### Purpose of the Application
-This application is a batch job. It reads from an incoming directory. That directory can be a Kafka or XFB destination. For the time being, a local directory is used. 
+This application is a batch job. It reads a csv from an incoming directory. That CSV file contains asset data. The directory can be a Kafka or XFB destination. For the time being, a local directory is used. 
+
 After reading from the incoming directory the batch inserts the records in database tables. We used in memory database, the H2 for the time being. In reality, it should use a full fledged relational database, like Oracle.
+
 There are two REST endpoints exposed. These two endpoints will let the user download the database asset records. There are two endpoints. One gives all the assets detail to the user. The other one gives the asset record error detail to the user.  
 
 #### Downloading the CSV reports after deploying the application.
