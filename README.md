@@ -1,5 +1,23 @@
 # incident-reporting
 
+### Purpose of the Application
+This application is a batch job. It reads from an incoming directory. That directory can be a Kafka or XFB destination. For the time being, a local directory is used. 
+After reading from the incoming directory the batch inserts the records in database tables. We used in memory database, the H2 for the time being. In reality, it should use a full fledged relational database, like Oracle.
+There are two REST endpoints exposed. These two endpoints will let the user download the database asset records. There are two endpoints. One gives all the assets detail to the user. The other one gives the asset record error detail to the user.  
+
+#### Downloading the CSV reports after deploying the application.
+After the application is deployed, it can be downloaded from the below URLs. It is assumed that the application is deployed in localhost.
+
+1) The asset report download URL will be - http://localhost:8081/reporting/findDailyAssets
+2) The error report download URL will be - http://localhost:8081/reporting/findDailyErrors
+
+In both the URLs, the below credential can be used for the time being.
+	User Id - admin \n
+	Password - password
+
+
+### How Does it Work
+
 This API will read from on input excel and reformat the
 data and create an output file.
 
@@ -36,12 +54,3 @@ There is another job that generates the error report. To run the
 job, please configure the cron expression cron.expression.error.report.generator.job .
 The url, <context-root>/findDailyErrors gives the error report.
 
-## Downloading the CSV reports after deploying the application.
-After the application is deployed, it can be downloaded from the below URLs. It is assumed that the application is deployed in localhost.
-
-1) The asset report download URL will be - http://localhost:8081/reporting/findDailyAssets
-2) The error report download URL will be - http://localhost:8081/reporting/findDailyErrors
-
-In both the URLs, the below credential can be used for the time being.
-	User Id - admin
-	Password - password
