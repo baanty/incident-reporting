@@ -1,14 +1,14 @@
 # incident-reporting
 
 This API will read from on input excel and reformat the
-data aot create an output file.
+data and create an output file.
 
-The REST API exposes an endpoint to download the Asset report for teh current date.
+The REST API exposes an endpoint to download the Asset report for the current date.
 The end point is <context-root>/findDailyAssets
   
-There are two batch jobs which run and prcess the incoming data. It is assumed that the data will warrive at a
+There are two batch jobs which run and process the incoming data. It is assumed that the data will arrive at a
 server directory. But the file arrival will not trigger the batch job. The batch job for processing the file has to be 
-configured with the properties given below
+configured with the properties given below.
 
 ## This file location should be changed according to the
 ## incoming XFB or Kafka destination directory.
@@ -34,4 +34,4 @@ cron.expression.report.generator.job=0 0 20 * * ?
 ## Error Job configuration
 There is another job that generates the error report. To run the
 job, please configure the cron expression cron.expression.error.report.generator.job .
-The url, <context-root>/findDailyErrors gives teh error report.
+The url, <context-root>/findDailyErrors gives the error report.
