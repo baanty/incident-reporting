@@ -5,7 +5,9 @@ The project is a POC for ING internal asset detail extraction. This application 
 
 After reading from the incoming directory the batch inserts the records in database tables. We used in memory database, the H2 for the time being. In reality, it should use a full fledged relational database, like Oracle.
 
-There are two REST endpoints exposed. These two endpoints will let the user download the database asset records. There are two endpoints. One gives all the assets detail to the user. The other one gives the asset error detail to the user.  
+There are two REST endpoints exposed. These two endpoints will let the user download the database asset records. There are two endpoints. One gives all the assets detail to the user. The other one gives the asset error detail to the user.
+
+The last part of the Project is another batch Job. It extracts the daily daily extracted database data into a reformatted CSV file. Then sends the CSV to a certain directory, which is configurable. This directory, in real time will be an XFB destination or Kafka outbound message.  
 
 ### Technology Used
 The Project is built on the below technology stack
