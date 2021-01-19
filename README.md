@@ -1,11 +1,20 @@
 # incident-reporting
 
 ### Purpose of the Application
-This application is a batch job. It reads a csv from an incoming directory. That CSV file contains asset data. The directory can be a Kafka or XFB destination. For the time being, a local directory is used. 
+The project is a POC for ING internal asset detail extraction. This application is a batch job. It reads a csv from an incoming directory. That CSV file contains asset data. The directory can be a Kafka or XFB destination. For the time being, a local directory is used. 
 
 After reading from the incoming directory the batch inserts the records in database tables. We used in memory database, the H2 for the time being. In reality, it should use a full fledged relational database, like Oracle.
 
-There are two REST endpoints exposed. These two endpoints will let the user download the database asset records. There are two endpoints. One gives all the assets detail to the user. The other one gives the asset record error detail to the user.  
+There are two REST endpoints exposed. These two endpoints will let the user download the database asset records. There are two endpoints. One gives all the assets detail to the user. The other one gives the asset error detail to the user.  
+
+### Technology Used
+The Project is built on the below technology stack
+1) Spring Boot - To expose REST endpoints and continue the back end process.
+2) Spring Scheduler - To run the data extraction batch job at a scheduled interval. We would need to configure the application.properties file to schedule the data extraction.
+3) Spring Data JPA - It is used to save the data from incoming CSV to database.
+4) H2 Database - This is a persistent and formatted storage of the incoming CSV data. H2 is not an ideal solution for these scenarios. It is heavy transaction data. But for POC we used H2. In case of production implementation we will use Oracle. The underlying database vendor detail, driver and other things will be changed in configuration.
+5) Spring RESTFul API - It is used to expose the endpoints to download the extracted data for a single day.
+
 
 #### Downloading the CSV reports after deploying the application.
 After the application is deployed, it can be downloaded from the below URLs. It is assumed that the application is deployed in localhost.
